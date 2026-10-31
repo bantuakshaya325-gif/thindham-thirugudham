@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thindham Thirugudham | Traditional Flavours</title>
+    <meta
+      name="description"
+      content="Thindham Thirugudham serves traditional South Indian delicacies, North Indian favourites, chicken specials, tiffins, and buffet experiences."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav-wrap">
+        <div class="brand">
+          <div class="brand-mark">TT</div>
+          <div>
+            <p class="brand-name">Thindham Thirugudham</p>
+            <span class="brand-tag">Traditional Taste • Family Feast</span>
+          </div>
+        </div>
+        <nav class="main-nav" aria-label="Primary navigation">
+          <a href="#about">About</a>
+          <a href="#menu">Menu</a>
+          <a href="#specials">Specials</a>
+          <a href="#buffet">Buffet</a>
+          <a href="#reserve">Reserve</a>
+        </nav>
+        <button class="cart-button" id="cartToggle" aria-label="Open cart">
+          <span>Cart</span>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="overlay"></div>
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow">Authentic taste with a festive touch</p>
+            <h1>South Indian warmth, North Indian richness, and chicken specials that steal the show.</h1>
+            <p>
+              From fluffy tiffins and comforting biryanis to signature Gongura Chicken and grand buffet spreads,
+              we serve every craving with tradition and soul.
+            </p>
+            <div class="hero-actions">
+              <a class="primary-btn" href="#menu">Explore Menu</a>
+              <a class="secondary-btn" href="#reserve">Book a Table</a>
+            </div>
+            <ul class="hero-points">
+              <li>Freshly prepared daily</li>
+              <li>Family-friendly dining</li>
+              <li>Buffet & takeaway available</li>
+            </ul>
+          </div>
+          <div class="hero-card">
+            <p class="card-label">Chef's Special</p>
+            <h3>Gongura Chicken</h3>
+            <p>
+              Tender chicken simmered in a bold Gongura leaf gravy, finished with aromatic spices and a tangy twist.
+            </p>
+            <div class="price-row">
+              <span class="price">₹399</span>
+              <button class="mini-btn" data-item="gongura-chicken">Add to cart</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="section about-section">
+        <div class="container about-grid">
+          <div>
+            <p class="section-tag">About Us</p>
+            <h2>Tradition on every plate</h2>
+            <p>
+              Thindham Thirugudham brings together the comfort of home-style South Indian meals and the hearty richness of North Indian favourites.
+              Our kitchen celebrates the flavours of Telangana, Tamil Nadu, Andhra, and beyond — with classic tiffins, fiery chicken dishes, and memorable family feasts.
+            </p>
+            <p>
+              Whether you are stopping by for breakfast, a hearty lunch, a family dinner, or a grand buffet gathering,
+              every dish is prepared with care, authenticity, and generous hospitality.
+            </p>
+          </div>
+          <div class="about-badges">
+            <div><strong>25+</strong><span>Signature dishes</span></div>
+            <div><strong>Daily</strong><span>Fresh tiffin service</span></div>
+            <div><strong>Buffet</strong><span>Family feast spreads</span></div>
+            <div><strong>Takeaway</strong><span>Fast & fresh</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="specials" class="section specials-section">
+        <div class="container">
+          <div class="section-header">
+            <p class="section-tag">Chef's selection</p>
+            <h2>Most loved dishes</h2>
+          </div>
+          <div class="special-grid">
+            <article class="food-card">
+              <span class="food-badge">Signature</span>
+              <h3>Gongura Chicken</h3>
+              <p>Bold, tangy, and aromatic with a classic Andhra-style finish.</p>
+              <div><strong>₹399</strong></div>
+            </article>
+            <article class="food-card">
+              <span class="food-badge">Popular</span>
+              <h3>Butter Chicken</h3>
+              <p>Rich tomato gravy with creamy textures and warm spice notes.</p>
+              <div><strong>₹349</strong></div>
+            </article>
+            <article class="food-card">
+              <span class="food-badge">Classic</span>
+              <h3>Mini Tiffin Combo</h3>
+              <p>Idli, dosa, sambar, chutney, and filter coffee for the perfect morning.</p>
+              <div><strong>₹189</strong></div>
+            </article>
+            <article class="food-card">
+              <span class="food-badge">Feast</span>
+              <h3>Buffet Platter</h3>
+              <p>Variety of curries, breads, rice, sweets, and live counters.</p>
+              <div><strong>₹499</strong></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="menu" class="section menu-section">
+        <div class="container">
+          <div class="section-header">
+            <p class="section-tag">Our menu</p>
+            <h2>For every craving</h2>
+          </div>
+
+          <div class="menu-layout">
+            <div class="menu-panel">
+              <div class="menu-item-header">
+                <h3>South Indian</h3>
+              </div>
+              <div class="menu-items" id="south-indian"></div>
+            </div>
+
+            <div class="menu-panel">
+              <div class="menu-item-header">
+                <h3>North Indian</h3>
+              </div>
+              <div class="menu-items" id="north-indian"></div>
+            </div>
+
+            <div class="menu-panel">
+              <div class="menu-item-header">
+                <h3>Chicken Specialities</h3>
+              </div>
+              <div class="menu-items" id="chicken"></div>
+            </div>
+
+            <div class="menu-panel">
+              <div class="menu-item-header">
+                <h3>Tiffins & Buffet</h3>
+              </div>
+              <div class="menu-items" id="buffet"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="buffet" class="section buffet-section">
+        <div class="container buffet-wrap">
+          <div>
+            <p class="section-tag">Family feasts</p>
+            <h2>Grand buffet experience</h2>
+            <ul class="buffet-list">
+              <li>Unlimited vegetarian & non-vegetarian favorites</li>
+              <li>Live curries, biryani, chapati, rice, and desserts</li>
+              <li>Perfect for birthdays, gatherings, and celebrations</li>
+              <li>Custom menu arrangements for events and parties</li>
+            </ul>
+          </div>
+          <div class="buffet-box">
+            <p>Weekend Feast</p>
+            <h3>₹799 / person</h3>
+            <button class="primary-btn wide" data-item="weekend-buffet">Add buffet package</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="reserve" class="section reservation-section">
+        <div class="container reserve-grid">
+          <div class="reservation-copy">
+            <p class="section-tag">Reserve now</p>
+            <h2>Plan your next family meal</h2>
+            <p>
+              Reserve a table for casual dining, special celebrations, or a cosy dinner with your loved ones.
+            </p>
+            <div class="reserve-info">
+              <div>
+                <span>📍</span>
+                <p>Traditional restaurant lane, Main City Road</p>
+              </div>
+              <div>
+                <span>📞</span>
+                <p>+91 98765 43210</p>
+              </div>
+              <div>
+                <span>🕒</span>
+                <p>Open daily: 8:00 AM – 11:00 PM</p>
+              </div>
+            </div>
+          </div>
+
+          <form id="reserveForm" class="reservation-form">
+            <div class="form-row">
+              <label>
+                Name
+                <input type="text" name="name" placeholder="Your name" required />
+              </label>
+            </div>
+            <div class="form-row two-col">
+              <label>
+                Phone
+                <input type="tel" name="phone" placeholder="Phone number" required />
+              </label>
+              <label>
+                Guests
+                <input type="number" name="guests" min="1" max="30" value="2" required />
+              </label>
+            </div>
+            <div class="form-row two-col">
+              <label>
+                Date
+                <input type="date" name="date" required />
+              </label>
+              <label>
+                Time
+                <input type="time" name="time" required />
+              </label>
+            </div>
+            <div class="form-row">
+              <label>
+                Occasion
+                <select name="occasion">
+                  <option value="family-dinner">Family Dinner</option>
+                  <option value="birthday">Birthday</option>
+                  <option value="business-meeting">Business Meeting</option>
+                  <option value="casual-lunch">Casual Lunch</option>
+                </select>
+              </label>
+            </div>
+            <button type="submit" class="primary-btn wide">Reserve Table</button>
+            <p id="reserveMessage" class="reserve-message" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <aside class="cart-panel" id="cartPanel" aria-label="Shopping cart">
+      <div class="cart-header">
+        <h3>Your order</h3>
+        <button id="closeCart" aria-label="Close cart">✕</button>
+      </div>
+      <div id="cartItems" class="cart-items"></div>
+      <div class="cart-footer">
+        <div class="totals">
+          <span>Subtotal</span>
+          <strong id="cartTotal">₹0</strong>
+        </div>
+        <button class="primary-btn wide" id="checkoutBtn">Place order</button>
+      </div>
+    </aside>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

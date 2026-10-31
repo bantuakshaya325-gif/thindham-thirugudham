@@ -1,0 +1,216 @@
+const menuItems = {
+  'south-indian': [
+    { id: 'mini-idli', name: 'Mini Idli', description: 'Soft and fluffy with coconut chutney', price: 120 },
+    { id: 'masala-dosa', name: 'Masala Dosa', description: 'Golden dosa with potato masala filling', price: 150 },
+    { id: 'pongal', name: 'Ven Pongal', description: 'Comforting and savory rice lentil breakfast', price: 140 },
+    { id: 'uttapam', name: 'Onion Uttapam', description: 'Traditional savory pancake with veggies', price: 170 }
+  ],
+  'north-indian': [
+    { id: 'paneer-butter-masala', name: 'Paneer Butter Masala', description: 'Creamy restaurant-style curry', price: 260 },
+    { id: 'dal-makhani', name: 'Dal Makhani', description: 'Slow-cooked black lentils and butter', price: 220 },
+    { id: 'mixed-veg-curry', name: 'Mixed Veg Curry', description: 'Fresh vegetables in a spiced gravy', price: 210 },
+    { id: 'naan-basket', name: 'Naan Basket', description: 'Butter, garlic, and plain naan', price: 160 }
+  ],
+  chicken: [
+    { id: 'gongura-chicken', name: 'Gongura Chicken', description: 'Signature tangy Andhra-style chicken curry', price: 399 },
+    { id: 'butter-chicken', name: 'Butter Chicken', description: 'Creamy, rich tomato-based chicken curry', price: 349 },
+    { id: 'chicken-biryani', name: 'Chicken Biryani', description: 'Fragrant rice with spiced chicken pieces', price: 310 },
+    { id: 'chicken-65', name: 'Chicken 65', description: 'Crispy fried chicken with special masala', price: 280 }
+  ],
+  buffet: [
+    { id: 'mini-tiffin-combo', name: 'Mini Tiffin Combo', description: 'Idli, dosa, chutney, sambar, coffee', price: 189 },
+    { id: 'family-tiffin', name: 'Family Tiffin Platter', description: 'Tradition meals for sharing', price: 499 },
+    { id: 'weekend-buffet', name: 'Weekend Buffet', description: 'Unlimited spread with rice and curries', price: 799 },
+    { id: 'party-platter', name: 'Party Platter', description: 'Large spread for gatherings and events', price: 999 }
+  ]
+};
+
+const cart = JSON.parse(localStorage.getItem('ttg-cart')) || [];
+const cartPanel = document.getElementById('cartPanel');
+const cartItemsEl = document.getElementById('cartItems');
+const cartCountEl = document.getElementById('cartCount');
+const cartTotalEl = document.getElementById('cartTotal');
+const toastEl = document.getElementById('toast');
+
+function formatPrice(value) {
+  return `₹${value}`;
+}
+
+function saveCart() {
+  localStorage.setItem('ttg-cart', JSON.stringify(cart));
+}
+
+function showToast(message) {
+  toastEl.textContent = message;
+  toastEl.classList.add('show');
+  clearTimeout(showToast.timeoutId);
+  showToast.timeoutId = setTimeout(() => {
+    toastEl.classList.remove('show');
+  }, 1700);
+}
+
+function renderMenus() {
+  Object.entries(menuItems).forEach(([category, items]) => {
+    const container = document.getElementById(category);
+    if (!container) return;
+
+    container.innerHTML = items
+      .map(
+        (item) => `
+          <div class="menu-row">
+            <div>
+              <h4>${item.name}</h4>
+              <p>${item.description}</p>
+            </div>
+            <span class="menu-price">${formatPrice(item.price)}</span>
+            <button class="qty-button" data-item="${item.id}">Add</button>
+          </div>
+        `
+      )
+      .join('');
+  });
+
+  document.querySelectorAll('[data-item]').forEach((button) => {
+    button.addEventListener('click', () => addToCart(button.dataset.item));
+  });
+}
+
+function addToCart(itemId) {
+  const item = findItemById(itemId);
+  if (!item) return;
+
+  const existing = cart.find((entry) => entry.id === itemId);
+
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push({ ...item, quantity: 1 });
+  }
+
+  saveCart();
+  updateCart();
+  showToast(`${item.name} added to cart`);
+}
+
+function findItemById(itemId) {
+  for (const items of Object.values(menuItems)) {
+    const found = items.find((item) => item.id === itemId);
+    if (found) return found;
+  }
+  return null;
+}
+
+function updateCart() {
+  const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+  cartCountEl.textContent = totalQuantity;
+
+  if (!cart.length) {
+    cartItemsEl.innerHTML = '<p class="empty-state">Your cart is empty. Add a few favourites to get started.</p>';
+    cartTotalEl.textContent = formatPrice(0);
+    return;
+  }
+
+  cartItemsEl.innerHTML = cart
+    .map(
+      (item) => `
+        <div class="cart-item">
+          <div>
+            <h4>${item.name}</h4>
+            <div class="cart-meta">
+              <span>${formatPrice(item.price)}</span>
+              <div class="quantity-box">
+                <button class="qty-mini" data-action="decrease" data-item="${item.id}">−</button>
+                <span>${item.quantity}</span>
+                <button class="qty-mini" data-action="increase" data-item="${item.id}">+</button>
+              </div>
+            </div>
+          </div>
+          <strong>${formatPrice(item.price * item.quantity)}</strong>
+        </div>
+      `
+    )
+    .join('');
+
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  cartTotalEl.textContent = formatPrice(subtotal);
+
+  document.querySelectorAll('[data-action]').forEach((button) => {
+    button.addEventListener('click', () => changeQuantity(button.dataset.item, button.dataset.action));
+  });
+}
+
+function changeQuantity(itemId, action) {
+  const item = cart.find((entry) => entry.id === itemId);
+  if (!item) return;
+
+  if (action === 'increase') {
+    item.quantity += 1;
+  }
+
+  if (action === 'decrease') {
+    item.quantity -= 1;
+  }
+
+  if (item.quantity <= 0) {
+    const index = cart.findIndex((entry) => entry.id === itemId);
+    cart.splice(index, 1);
+  }
+
+  saveCart();
+  updateCart();
+}
+
+function toggleCart(forceOpen) {
+  const shouldOpen = typeof forceOpen === 'boolean' ? forceOpen : !cartPanel.classList.contains('open');
+  cartPanel.classList.toggle('open', shouldOpen);
+}
+
+function handleReserveSubmit(event) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const formData = new FormData(form);
+  const name = formData.get('name');
+  const date = formData.get('date');
+  const time = formData.get('time');
+  const guests = formData.get('guests');
+
+  const messageEl = document.getElementById('reserveMessage');
+  messageEl.textContent = `Thank you, ${name}! Your table for ${guests} guest(s) on ${date} at ${time} has been reserved.`;
+  form.reset();
+}
+
+function handleCheckout() {
+  if (!cart.length) {
+    showToast('Your cart is empty');
+    return;
+  }
+
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  showToast(`Order placed for ${formatPrice(total)}`);
+  cart.length = 0;
+  saveCart();
+  updateCart();
+  toggleCart(false);
+}
+
+const reserveForm = document.getElementById('reserveForm');
+reserveForm.addEventListener('submit', handleReserveSubmit);
+
+document.getElementById('cartToggle').addEventListener('click', () => toggleCart());
+document.getElementById('closeCart').addEventListener('click', () => toggleCart(false));
+document.getElementById('checkoutBtn').addEventListener('click', handleCheckout);
+
+renderMenus();
+updateCart();
+
+window.addEventListener('click', (event) => {
+  if (!cartPanel.contains(event.target) && !event.target.closest('#cartToggle')) {
+    toggleCart(false);
+  }
+});
+
+window.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') {
+    toggleCart(false);
+  }
+});
