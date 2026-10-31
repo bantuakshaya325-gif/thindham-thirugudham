@@ -71,6 +71,7 @@
               <span class="price">₹399</span>
               <button class="mini-btn" data-item="gongura-chicken">Add to cart</button>
             </div>
+            <div class="special-offer-banner">Special order discount: 10% OFF</div>
           </div>
         </div>
       </section>
@@ -268,9 +269,24 @@
       </div>
       <div id="cartItems" class="cart-items"></div>
       <div class="cart-footer">
+        <div class="discount-row">
+          <label class="discount-toggle">
+            <input type="checkbox" id="specialOrderToggle" />
+            <span>Special order discount</span>
+          </label>
+          <strong id="specialDiscountValue">-₹0</strong>
+        </div>
         <div class="totals">
           <span>Subtotal</span>
           <strong id="cartTotal">₹0</strong>
+        </div>
+        <div class="totals totals-row discount-line">
+          <span>Discount</span>
+          <strong id="discountAmount">-₹0</strong>
+        </div>
+        <div class="totals totals-row total-line">
+          <span>Total</span>
+          <strong id="netTotal">₹0</strong>
         </div>
         <button class="primary-btn wide" id="checkoutBtn">Place order</button>
       </div>
